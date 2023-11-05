@@ -1,0 +1,14 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: RubyChinaQAService
+  data:
+    neo4j:
+      uri: http://localhost:7474/
+      username: neo4j
+      password: chrome-grand-protect-gentle-catalog-9658
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
