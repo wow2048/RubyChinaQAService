@@ -17,7 +17,7 @@ public class RubyApplicationQuestion implements Question {
         Ruby ruby = rubyRepository.findByName("Ruby");
         StringBuilder sb = new StringBuilder();
         ruby.getApplications().forEach(each -> {
-            sb.append(each.getName()).append(":").append(each.getDescription()).append(System.lineSeparator());
+            sb.append(each.getName()).append(": ").append(each.getDescription()).append(System.lineSeparator());
 
         });
         return sb.toString();
@@ -25,6 +25,11 @@ public class RubyApplicationQuestion implements Question {
 
     @Override
     public List<Blog> recommend() {
-        return Lists.newArrayList();
+        Ruby ruby = rubyRepository.findByName("Ruby");
+        List<Blog> result = Lists.newArrayList();
+        ruby.getApplications().forEach(each -> {
+            result.addAll(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+        });
+        return result;
     }
 }

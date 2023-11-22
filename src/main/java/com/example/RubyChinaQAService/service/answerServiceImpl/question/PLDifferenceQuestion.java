@@ -1,11 +1,11 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.question;
 
 import com.example.RubyChinaQAService.dao.PLRepository;
+import com.example.RubyChinaQAService.dao.RubyRepository;
 import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.entity.po.ProgrammingLanguage;
-import com.google.common.collect.Lists;
+import com.example.RubyChinaQAService.entity.po.Ruby;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ import java.util.List;
 public class PLDifferenceQuestion implements Question {
     private PLRepository plRepository;
 
-    @Setter
+    private RubyRepository rubyRepository;
+
     private String name;
 
     @Override
@@ -24,6 +25,7 @@ public class PLDifferenceQuestion implements Question {
 
     @Override
     public List<Blog> recommend() {
-        return Lists.newArrayList();
+        Ruby ruby = rubyRepository.findByName("Ruby");
+        return ruby.getBlogs().stream().filter(Blog::isExcellent).toList();
     }
 }

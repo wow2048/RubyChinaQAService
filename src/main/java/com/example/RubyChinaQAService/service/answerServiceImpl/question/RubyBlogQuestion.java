@@ -18,12 +18,12 @@ public class RubyBlogQuestion implements Question{
 
     @Override
     public String answer() {
-        return "Ruby相关的" + type + "博客有：" + System.lineSeparator();
+        return "Ruby相关的" + type + "博客有" + System.lineSeparator();
     }
 
     @Override
     public List<Blog> recommend() {
         Ruby ruby = rubyRepository.findByName("Ruby");
-        return ruby.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type)).toList();
+        return ruby.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type) || each.isExcellent()).toList();
     }
 }

@@ -174,7 +174,7 @@ public class QuestionClassifier {
         }
         if (checkQuestion(question, DIFFERENCE_DICT)) {
             plEntities.forEach(each -> {
-                questionList.add(new PLDifferenceQuestion(plRepository, each));
+                questionList.add(new PLDifferenceQuestion(plRepository, rubyRepository, each));
             });
         }
 

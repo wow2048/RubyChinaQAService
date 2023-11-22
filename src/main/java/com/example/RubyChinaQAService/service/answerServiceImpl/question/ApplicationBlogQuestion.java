@@ -24,6 +24,8 @@ public class ApplicationBlogQuestion implements Question {
     @Override
     public List<Blog> recommend() {
         ApplicationNode application = applicationRepository.findByName(name);
-        return application.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type)).toList();
+        return application.getBlogs().stream()
+                .filter(each -> each.getType().equalsIgnoreCase(type) || each.isExcellent())
+                .toList();
     }
 }

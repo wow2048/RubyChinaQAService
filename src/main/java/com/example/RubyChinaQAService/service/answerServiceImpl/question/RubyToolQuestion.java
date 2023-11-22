@@ -27,6 +27,11 @@ public class RubyToolQuestion implements Question{
 
     @Override
     public List<Blog> recommend() {
-        return Lists.newArrayList();
+        Ruby ruby = rubyRepository.findByName("Ruby");
+        List<Blog> result = Lists.newArrayList();
+        ruby.getTools().forEach(each -> {
+            result.addAll(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+        });
+        return result;
     }
 }

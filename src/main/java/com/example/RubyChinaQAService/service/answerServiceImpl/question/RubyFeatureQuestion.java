@@ -4,6 +4,7 @@ import com.example.RubyChinaQAService.dao.RubyRepository;
 import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.entity.po.Feature;
 import com.example.RubyChinaQAService.entity.po.Ruby;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -25,7 +26,11 @@ public class RubyFeatureQuestion implements Question{
     @Override
     public List<Blog> recommend() {
         Ruby ruby = rubyRepository.findByName("Ruby");
-        List<Blog> blogs = ruby.getBlogs();
-        return blogs.stream().filter(each -> each.getTitle().contains("特性")).toList();
+        List<Blog> result = Lists.newArrayList();
+        ruby.getFeatures().forEach(each -> {
+            result.addAll(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+        });
+        result.addAll(ruby.getBlogs().stream().filter(each -> each.getTitle().contains("特性")).toList());
+        return result;
     }
 }

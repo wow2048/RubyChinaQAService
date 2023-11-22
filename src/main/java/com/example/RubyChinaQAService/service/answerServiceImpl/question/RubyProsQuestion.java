@@ -15,7 +15,7 @@ public class RubyProsQuestion implements Question {
     @Override
     public String answer() {
         Ruby ruby = rubyRepository.findByName("Ruby");
-        return "Ruby语言的技术缺点有" + System.lineSeparator() + ruby.getPros();
+        return "Ruby语言的技术优点有" + System.lineSeparator() + ruby.getPros();
     }
 
     @Override

@@ -9,18 +9,19 @@ import java.util.List;
 
 @AllArgsConstructor
 public class DeployBlogQuestion implements Question {
+
     private DeploymentRepository deploymentRepository;
 
     private String type;
+
     @Override
     public String answer() {
-
-        return null;
+        return String.format("Ruby部署相关%s的博客有%s", type, System.lineSeparator());
     }
 
     @Override
     public List<Blog> recommend() {
         Deployment deployment = deploymentRepository.findByName("部署");
-        return deployment.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type)).toList();
+        return deployment.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type) || each.isExcellent()).toList();
     }
 }

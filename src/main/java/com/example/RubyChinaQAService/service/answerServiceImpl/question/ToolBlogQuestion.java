@@ -18,12 +18,12 @@ public class ToolBlogQuestion implements Question{
 
     @Override
     public String answer() {
-        return String.format("%s的相关%s博客有：%s", name, type, System.lineSeparator());
+        return String.format("%s的相关%s博客有%s", name, type, System.lineSeparator());
     }
 
     @Override
     public List<Blog> recommend() {
         Tool tool = toolRepository.findByName(name);
-        return tool.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type)).toList();
+        return tool.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type) || each.isExcellent()).toList();
     }
 }

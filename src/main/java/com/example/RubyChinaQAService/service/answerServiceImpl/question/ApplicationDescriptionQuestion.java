@@ -9,6 +9,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ApplicationDescriptionQuestion implements Question {
+
     private ApplicationRepository applicationRepository;
 
     private String name;
