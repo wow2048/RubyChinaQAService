@@ -28,7 +28,8 @@ public class RubyFeatureQuestion implements Question{
         Ruby ruby = rubyRepository.findByName("Ruby");
         List<Blog> result = Lists.newArrayList();
         ruby.getFeatures().forEach(each -> {
-            result.addAll(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+            List<Blog> excellentBlogs = Lists.newArrayList(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+            result.addAll(excellentBlogs.subList(0, Math.min(5, excellentBlogs.size())));
         });
         result.addAll(ruby.getBlogs().stream().filter(each -> each.getTitle().contains("特性")).toList());
         return result;

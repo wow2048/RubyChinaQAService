@@ -1,6 +1,7 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.RubyRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.RubyApplicationQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.RubyBlogQuestion;
@@ -65,7 +66,7 @@ public class RubyClassifier extends QuestionClassifier {
             boolean hasType = false;
             if (checkQuestion(question, LEARN_DICT)) {
                 hasType = true;
-                questionList.add(new RubyBlogQuestion(rubyRepository, "learning"));
+                questionList.add(new RubyBlogQuestion(rubyRepository, "study"));
             }
             if (checkQuestion(question, RESOURCE_DICT)) {
                 hasType = true;
@@ -80,5 +81,10 @@ public class RubyClassifier extends QuestionClassifier {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        return Lists.newArrayList();
     }
 }

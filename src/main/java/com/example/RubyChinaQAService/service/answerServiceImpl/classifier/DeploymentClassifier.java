@@ -1,6 +1,7 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.DeploymentRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.DeployBlogQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
 import com.google.common.collect.Lists;
@@ -31,7 +32,7 @@ public class DeploymentClassifier extends QuestionClassifier {
             boolean hasType = false;
             if (checkQuestion(question, LEARN_DICT)) {
                 hasType = true;
-                questionList.add(new DeployBlogQuestion(deploymentRepository, "learning"));
+                questionList.add(new DeployBlogQuestion(deploymentRepository, "study"));
             }
             if (checkQuestion(question, RESOURCE_DICT)) {
                 hasType = true;
@@ -47,5 +48,16 @@ public class DeploymentClassifier extends QuestionClassifier {
         }
         return true;
 
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        List<Blog> blogs = Lists.newArrayList();
+        DEPLOYMENT_DICT.forEach(each -> {
+            if (input.contains(each)) {
+                blogs.addAll(deploymentRepository.findByName(each).getBlogs());
+            }
+        });
+        return blogs;
     }
 }

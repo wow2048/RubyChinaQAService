@@ -1,6 +1,7 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.FeatureRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.FeatureBlogQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.FeatureDescriptionQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
@@ -39,7 +40,7 @@ public class FeatureClassifier extends QuestionClassifier {
             if (checkQuestion(question, LEARN_DICT)) {
                 hasType = true;
                 featureEntities.forEach(each -> {
-                    questionList.add(new FeatureBlogQuestion(featureRepository, each, "learning"));
+                    questionList.add(new FeatureBlogQuestion(featureRepository, each, "study"));
                 });
             }
             if (checkQuestion(question, RESOURCE_DICT)) {
@@ -61,5 +62,16 @@ public class FeatureClassifier extends QuestionClassifier {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        List<Blog> blogs = Lists.newArrayList();
+        FEATURE_DICT.forEach(each -> {
+            if (input.contains(each)) {
+                blogs.addAll(featureRepository.findByName(each).getBlogs());
+            }
+        });
+        return blogs;
     }
 }

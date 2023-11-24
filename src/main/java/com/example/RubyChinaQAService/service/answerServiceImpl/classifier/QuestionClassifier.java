@@ -1,5 +1,6 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
 import com.google.common.collect.Lists;
 
@@ -41,4 +42,6 @@ public abstract class QuestionClassifier {
         }
         return false;
     }
+
+    public abstract List<Blog> checkDict(String question);
 }

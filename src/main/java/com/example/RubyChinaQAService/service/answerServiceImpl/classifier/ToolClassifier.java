@@ -1,6 +1,7 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.ToolRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.ToolBlogQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.ToolDescriptionQuestion;
@@ -39,7 +40,7 @@ public class ToolClassifier extends QuestionClassifier {
             if (checkQuestion(question, LEARN_DICT)) {
                 hasType = true;
                 toolEntities.forEach(each -> {
-                    questionList.add(new ToolBlogQuestion(toolRepository, each, "learning"));
+                    questionList.add(new ToolBlogQuestion(toolRepository, each, "study"));
                 });
             }
             if (checkQuestion(question, RESOURCE_DICT)) {
@@ -61,5 +62,16 @@ public class ToolClassifier extends QuestionClassifier {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        List<Blog> blogs = Lists.newArrayList();
+        TOOL_DICT.forEach(each -> {
+            if (input.contains(each)) {
+                blogs.addAll(toolRepository.findByName(each).getBlogs());
+            }
+        });
+        return blogs;
     }
 }

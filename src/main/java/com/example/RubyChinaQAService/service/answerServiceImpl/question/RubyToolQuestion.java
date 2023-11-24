@@ -30,7 +30,8 @@ public class RubyToolQuestion implements Question{
         Ruby ruby = rubyRepository.findByName("Ruby");
         List<Blog> result = Lists.newArrayList();
         ruby.getTools().forEach(each -> {
-            result.addAll(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+            List<Blog> excellentBlogs = Lists.newArrayList(each.getBlogs().stream().filter(Blog::isExcellent).toList());
+            result.addAll(excellentBlogs.subList(0, Math.min(5, excellentBlogs.size())));
         });
         return result;
     }

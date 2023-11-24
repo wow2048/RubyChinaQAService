@@ -2,6 +2,7 @@ package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.PLRepository;
 import com.example.RubyChinaQAService.dao.RubyRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.PLConsQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.PLDifferenceQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.PLProsQuestion;
@@ -52,5 +53,10 @@ public class PLClassifier extends QuestionClassifier {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        return Lists.newArrayList();
     }
 }

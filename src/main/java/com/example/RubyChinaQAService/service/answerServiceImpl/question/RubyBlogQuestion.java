@@ -3,6 +3,7 @@ package com.example.RubyChinaQAService.service.answerServiceImpl.question;
 import com.example.RubyChinaQAService.dao.RubyRepository;
 import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.entity.po.Ruby;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 
@@ -18,12 +19,22 @@ public class RubyBlogQuestion implements Question{
 
     @Override
     public String answer() {
-        return "Ruby相关的" + type + "博客有" + System.lineSeparator();
+        return "关于这个问题推荐以下博客" + System.lineSeparator();
     }
 
     @Override
     public List<Blog> recommend() {
         Ruby ruby = rubyRepository.findByName("Ruby");
-        return ruby.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type) || each.isExcellent()).toList();
+        List<Blog> result = Lists.newArrayList();
+        result.addAll(ruby.getBlogs().stream().filter(each -> each.getType().equalsIgnoreCase(type)).toList());
+        if (result.size() < 20) {
+            result.addAll(ruby.getBlogs().stream().filter(Blog::isExcellent).toList());
+        }
+        if (result.size() < 20) {
+            List<Blog> normalBlogs =
+                    Lists.newArrayList(ruby.getBlogs().stream().filter(each -> !each.isExcellent()).toList());
+            result.addAll(normalBlogs.subList(0, Math.min(20 - result.size(), normalBlogs.size())));
+        }
+        return result;
     }
 }

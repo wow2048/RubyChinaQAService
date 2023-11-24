@@ -1,6 +1,7 @@
 package com.example.RubyChinaQAService.service.answerServiceImpl.classifier;
 
 import com.example.RubyChinaQAService.dao.ApplicationRepository;
+import com.example.RubyChinaQAService.entity.po.Blog;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.ApplicationBlogQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.ApplicationDescriptionQuestion;
 import com.example.RubyChinaQAService.service.answerServiceImpl.question.Question;
@@ -40,7 +41,7 @@ public class ApplicationClassifier extends QuestionClassifier {
                 if (checkQuestion(question, LEARN_DICT)) {
                     hasType = true;
                     applicationEntities.forEach(each -> {
-                        questionList.add(new ApplicationBlogQuestion(applicationRepository, each, "learning"));
+                        questionList.add(new ApplicationBlogQuestion(applicationRepository, each, "study"));
                     });
                 }
                 if (checkQuestion(question, RESOURCE_DICT)) {
@@ -63,5 +64,16 @@ public class ApplicationClassifier extends QuestionClassifier {
             }
             return true;
         }
+    }
+
+    @Override
+    public List<Blog> checkDict(String input) {
+        List<Blog> blogs = Lists.newArrayList();
+        APPLICATION_DICT.forEach(each -> {
+            if (input.contains(each)) {
+                blogs.addAll(applicationRepository.findByName(each).getBlogs());
+            }
+        });
+        return blogs;
     }
 }
